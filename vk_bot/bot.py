@@ -15,6 +15,11 @@ uploader = PhotoUploader(bot.api_context)
 
 @bot.message_handler(bot.regex_filter('(?i)(начать|старт)'))
 async def greetings(event: SimpleBotEvent) -> SimpleBotEvent.answer:
+    """
+    Хендлер который отлавливает сообщение пользователя - старт/начать.
+    Регистр сообщения не важен.
+    Выводит пользователю меню с доступными разделами.
+    """
     logger.info(f'User: {event.user_id} starts conversation with the bot.')
     await user_state_machine.set_state(event=event, state=UserState.section, for_what=ForWhat.FOR_USER)
     await event.answer(
@@ -28,6 +33,11 @@ async def greetings(event: SimpleBotEvent) -> SimpleBotEvent.answer:
 
 @bot.message_handler(bot.state_filter(fsm=user_state_machine, state=UserState.section, for_what=ForWhat.FOR_USER))
 async def get_section(event: SimpleBotEvent) -> SimpleBotEvent.answer:
+    """
+    Хендлер который отлавливает состояние пользователя.
+    Выбранная секция добавляется в машину состояния.
+    После чего по данной секции будут выведены все товары.
+    """
     await user_state_machine.add_data(
         event=event,
         for_what=ForWhat.FOR_USER,
@@ -66,6 +76,10 @@ async def get_section(event: SimpleBotEvent) -> SimpleBotEvent.answer:
 
 @bot.message_handler(bot.payload_contains_filter('button'))
 async def get_payload(event: SimpleBotEvent) -> SimpleBotEvent.answer:
+    """
+    Хендлер который отлавливает payload от кнопки "назад".
+    Вызывает функцию greetings по нажатию.
+    """
     await greetings(event)
 
 
