@@ -8,7 +8,7 @@ from keyboards.go_back_keyboard import get_go_back_keyboard
 from keyboards.section_keyboard import get_section_keyboard
 from states.user_state import UserState, user_state_machine
 
-bot = SimpleLongPollBot(tokens=bot_configuration.bot_token, group_id=bot_configuration.group_id)
+bot = SimpleLongPollBot(tokens=bot_configuration.bot_token, group_id=int(bot_configuration.group_id))
 uploader = PhotoUploader(bot.api_context)
 
 
