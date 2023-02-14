@@ -14,6 +14,6 @@ class BotConfig:
     group_id: str
 
 
-bot_configuration = BotConfig(bot_token=os.getenv('BOT_TOKEN'), group_id=os.getenv('GROUP_ID'))
+bot_configuration: BotConfig = BotConfig(bot_token=os.getenv('BOT_TOKEN'), group_id=os.getenv('GROUP_ID'))
 
-ROOT_DIR = os.path.dirname(__file__)
+ROOT_DIR: str = os.path.dirname(__file__)
