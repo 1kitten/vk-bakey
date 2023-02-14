@@ -42,7 +42,7 @@ def create_and_fill_data_base() -> None:
     Если база данных пустая, то наполняем её стартовой информацией.
     """
     with sq.connect(os.path.join(ROOT_DIR, 'bakey.db')) as conn:
-        cur = conn.cursor()
+        cur: conn.cursor = conn.cursor()
         if not _check_if_data_base_empty():
             cur.executescript(CREATION_INSERT_SCRIPT)
 
@@ -54,7 +54,7 @@ def _check_if_data_base_empty() -> bool:
     :return: bool
     """
     with sq.connect(os.path.join(ROOT_DIR, 'bakey.db')) as conn:
-        cur = conn.cursor()
+        cur: conn.cursor = conn.cursor()
         try:
             cur.execute(
                 """
