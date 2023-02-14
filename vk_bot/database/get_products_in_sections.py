@@ -4,7 +4,7 @@ import sqlite3 as sq
 
 from bot_config import ROOT_DIR
 
-logger = logging.getLogger('products_log')
+logger: logging.Logger = logging.getLogger('products_log')
 
 
 def get_products_from_current_section(section: str) -> sq.Cursor.fetchall:
