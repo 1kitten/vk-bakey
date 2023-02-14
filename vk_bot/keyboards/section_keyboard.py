@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from vkwave.bots.utils.keyboards.keyboard import Keyboard, ButtonColor
 from database.get_all_sections import get_sections_from_database
 
@@ -9,9 +11,9 @@ def get_section_keyboard() -> Keyboard:
     Размер клавиатуры 3x1 (3 кнопки на 1 ряд).
     :return: Клавиатура (Keyboard)
     """
-    section_keyboard = Keyboard(one_time=True)
+    section_keyboard: Keyboard = Keyboard(one_time=True)
 
-    all_sections = get_sections_from_database()
+    all_sections: Tuple = get_sections_from_database()
 
     buttons_added: int = 0
 
