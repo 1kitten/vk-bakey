@@ -51,7 +51,7 @@ def _check_if_data_base_empty() -> bool:
     """
     Проверяем, что база данных пуста.
     Возвращаем False, если она пустая и True, если нет.
-    :return:
+    :return: bool
     """
     with sq.connect(os.path.join(ROOT_DIR, 'bakey.db')) as conn:
         cur = conn.cursor()
