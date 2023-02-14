@@ -1,7 +1,12 @@
 from vkwave.bots.fsm import State, FiniteStateMachine
 
-user_state_machine = FiniteStateMachine()
+user_state_machine: FiniteStateMachine = FiniteStateMachine()
 
 
 class UserState:
-    section = State('section')
+    """
+    Класс описывающий состояние пользователя.
+    Нужен для более корректной работы при диалоге
+    с пользователем.
+    """
+    section: State = State('section')
