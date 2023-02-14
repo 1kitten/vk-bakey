@@ -1,6 +1,7 @@
 from vkwave.bots import SimpleLongPollBot, SimpleBotEvent, PhotoUploader
 from vkwave.bots.fsm import ForWhat
-
+import logging.config
+from logging_config import LOGGING
 from bot_config import bot_configuration
 from database.fill_data_base import create_and_fill_data_base
 from database.get_products_in_sections import get_products_from_current_section
@@ -14,6 +15,7 @@ uploader = PhotoUploader(bot.api_context)
 
 @bot.message_handler(bot.regex_filter('(?i)(начать|старт)'))
 async def greetings(event: SimpleBotEvent) -> SimpleBotEvent.answer:
+    logger.info(f'User: {event.user_id} starts conversation with the bot.')
     await user_state_machine.set_state(event=event, state=UserState.section, for_what=ForWhat.FOR_USER)
     await event.answer(
         message=
@@ -33,6 +35,9 @@ async def get_section(event: SimpleBotEvent) -> SimpleBotEvent.answer:
     )
     user_data = await user_state_machine.get_data(event=event, for_what=ForWhat.FOR_USER)
     user_chosen_section = user_data.get('section')
+
+    logger.info(f'User: {event.user_id} asked for items in {user_chosen_section} section.')
+
     await user_state_machine.finish(event=event, for_what=ForWhat.FOR_USER)
 
     await event.answer(
@@ -65,5 +70,11 @@ async def get_payload(event: SimpleBotEvent) -> SimpleBotEvent.answer:
 
 
 if __name__ == '__main__':
+    logger: logging.Logger = logging.getLogger('bot_logger')
+    logging.config.dictConfig(LOGGING)
+
     create_and_fill_data_base()
+
+    logger.info('Bot starts working.')
+
     bot.run_forever()

@@ -1,6 +1,10 @@
+import logging
 import os.path
 import sqlite3 as sq
+
 from bot_config import ROOT_DIR
+
+logger = logging.getLogger('products_log')
 
 
 def get_products_from_current_section(section: str) -> sq.Cursor.fetchall:
@@ -9,6 +13,7 @@ def get_products_from_current_section(section: str) -> sq.Cursor.fetchall:
     :param section: str. Наименование раздела.
     :return: sq.Cursor.fetchall. Результат выполнения запроса, кортеж из товаров в разделе.
     """
+    logger.info(f'Getting products from {section} section')
     with sq.connect(os.path.join(ROOT_DIR, 'bakey.db')) as conn:
         cur = conn.cursor()
         cur.execute(
